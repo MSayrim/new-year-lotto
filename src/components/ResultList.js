@@ -20,9 +20,11 @@ const ResultList: React.FC = () => (
     <List
         grid={{ gutter: 12, column: 4 }}
         dataSource={data}
+        style={{marginTop:"5%",marginRight:"5%"}}
         renderItem={(item) => (
             <List.Item>
-                <Card title={item.title}>Card content</Card>
+                <Card title={item.title}>Card content
+                </Card>
             </List.Item>
         )}
     />

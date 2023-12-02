@@ -1,3 +1,4 @@
+
 button {
     font-family: "Open Sans";
     color: #fff;
@@ -10,9 +11,42 @@ button {
     width: 316px;
     border-radius: 6px;
     padding: 20px;
-    background-color: #13BAFF;
+    background-image: url('./assets/Ekran Resmi 2023-12-02 20.16.56.png'); /* Replace 'path-to-your-image.jpg' with the actual path or URL of your image */
+    background-size: cover;
     box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Beyaz bir dış gölge ekleyerek buzlu efekt */
+    opacity: 0.8;
+    /* Adjust the color and size as needed */
 }
+.button.ice {
+    color: white;
+    border: 1px solid rgba(168, 236, 255, 1);
+    background-image: linear-gradient(
+            to bottom,
+            rgba(86, 158, 255, 0.7),
+            rgba(59, 120, 248, 0.7)
+    );
+    box-shadow: 0 0 70px rgba(48, 138, 255, 0.5),
+    0 5px 20px rgba(48, 138, 255, 0.5),
+    inset 0 1px rgba(255, 236, 168, 1),
+    inset 0 -1px rgba(255, 236, 168, 1);
+}
+
+.button.ice:before {
+    box-shadow: inset 0 0 30px 0 rgba(255, 236, 168, 1);
+}
+
+.button.ice:hover {
+    box-shadow: 0 0 70px rgba(48, 138, 255, 0.2),
+    0 5px 20px rgba(48, 138, 255, 0.2),
+    inset 0 1px rgba(168, 236, 255, 1),
+    inset 0 -1px rgba(168, 236, 255, 1);
+}
+
+.button.ice:hover:before {
+    box-shadow: inset 0 0 50px 0 rgba(168, 236, 255, 1);
+}
+
 
 .scene {
     font-family: "Open Sans";
@@ -60,7 +94,7 @@ button {
     width: 280px;
     height: 280px;
     background-color: rgba(85, 177, 201, .3);
-    border: 14px solid #00bcff;
+    border: 14px solid rgba(171, 0, 23, 0.9);
     border-radius: inherit;
     box-sizing: border-box;
     transition: opacity 0.7s;
@@ -75,7 +109,7 @@ button {
     opacity: 0;
     pointer-events: none;
 }
-
+/*
 .lottery-machine .lottery-lever {
     position: absolute;
     background-image: url('https://svgur.com/i/DGD.svg');
@@ -95,7 +129,7 @@ button {
 .lottery-machine .lottery-lever.down {
     transform: rotate(15deg);
 }
-
+*/
 .lottery-machine .lottery-right-door,
 .lottery-machine .lottery-left-door {
     position: absolute;
@@ -190,7 +224,7 @@ button {
     top: 0;
     left: 0;
     height: 428px;
-    width: 200%;
+    width: 316px;
     z-index: 5;
 }
 

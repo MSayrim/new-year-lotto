@@ -1,7 +1,7 @@
 // src/components/LotteryMachine.js
-import React, { useEffect, useState,useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import $ from 'jquery';
-import { TweenMax, Power2 } from 'gsap';
+import {TweenMax, Power2} from 'gsap';
 import '../App.css';
 
 class LotteryMachine {
@@ -10,7 +10,7 @@ class LotteryMachine {
         _def = {
             class: "lottery-machine",
             viewClasses: {
-                base : 'base' ,
+                base: 'base',
                 lever: 'lever',
                 tube: 'tube',
                 rightDoor: 'right-door',
@@ -38,7 +38,7 @@ class LotteryMachine {
         this.opt = $.extend(true, _def, opt)
         this.view = null
         this.views = {}
-        this.dom = { canvas: null }
+        this.dom = {canvas: null}
         this.balls = []
         this.build()
     }
@@ -49,20 +49,20 @@ class LotteryMachine {
         this.opt = $.extend(this.opt, opt)
 
         if (this.view == null) {
-            this.view = $("<div>", { class: `${this.opt.class}`});
+            this.view = $("<div>", {class: `${this.opt.class}`});
         }
 
         for (let key in this.opt.viewClasses) {
-            this.views[key] = $("<div>", { class: `lottery-${this.opt.viewClasses[key]}`});
+            this.views[key] = $("<div>", {class: `lottery-${this.opt.viewClasses[key]}`});
             this.views[key].appendTo(this.view);
         }
 
         if (base.canvas == null) {
-            base.canvas = $("<canvas>", { class: `${this.opt.class}-canvas`}).appendTo(this.view)
+            base.canvas = $("<canvas>", {class: `${this.opt.class}-canvas`}).appendTo(this.view)
         }
 
         // Добавить новые шарики
-        this.balls = function() {
+        this.balls = function () {
             let results = []
             for (
                 let j = 0, ref = this.opt.ball.count;
@@ -243,7 +243,7 @@ class LotteryMachine {
         if (!this.disabled) {
             _time_from = Date.now()
             // Вспомогательная рекурсивная функция
-            _t_func = function() {
+            _t_func = function () {
                 let _k, _val
                 // Прогресс анимации
                 _k = (Date.now() - _time_from) / opt.duration
@@ -295,7 +295,7 @@ class LotteryMachine {
     }
 
     // анимация прекращения перемешивания шариков
-    _endShakeBalls(now){
+    _endShakeBalls(now) {
         this.views.lever.removeClass('down')
         this.balls.forEach(ball => {
             // Если цикл анимации завершился или не начинался
@@ -323,7 +323,7 @@ class LotteryMachine {
     }
 
     // play: shakeBalls + endShakeBalls
-    play(){
+    play() {
         let _now = Date.now();
         return this.animate({
                 from: _now,
@@ -343,8 +343,8 @@ class LotteryMachine {
     }
 
     // animation of rolling ball out of machine
-    rollBallOut(parent, placeForBall, animationOpt, callback){
-        const { ball, lift, rightDoor, leftDoor } = this.views;
+    rollBallOut(parent, placeForBall, animationOpt, callback) {
+        const {ball, lift, rightDoor, leftDoor} = this.views;
         const randomColor = this.opt.ball.colors[Math.floor(Math.random() * this.opt.ball.colors.length)];
         const randomNumber = [Math.floor(Math.random() * 100)];
 
@@ -352,10 +352,10 @@ class LotteryMachine {
             .removeClass("no-transition")
             .attr('style', '')
             .html('')
-            .css({ backgroundColor: randomColor })
+            .css({backgroundColor: randomColor})
             .addClass("blink");
 
-        function liftBallUp(){
+        function liftBallUp() {
             return new Promise(resolve => {
                 ball.addClass('animation-up');
                 lift.addClass("animation");
@@ -363,7 +363,7 @@ class LotteryMachine {
             });
         }
 
-        function liftBallDown(){
+        function liftBallDown() {
             return new Promise(resolve => {
                 ball.addClass("animation-roll");
                 lift.removeClass("animation");
@@ -371,9 +371,9 @@ class LotteryMachine {
             });
         }
 
-        function openDoors(){
+        function openDoors() {
             return new Promise(resolve => {
-                ball.css({ zIndex: 2 })
+                ball.css({zIndex: 2})
                     .html(randomNumber)
                     .addClass("no-transition")
                     .removeClass("blink animation-roll animation-up");
@@ -390,22 +390,23 @@ class LotteryMachine {
             const placeForBallElement = $(placeForBall); // Ensure placeForBall is a jQuery object
             const endCoords = placeForBallElement.offset();
 
+            /*
             const animatedBall = ball
                 .clone()
                 .addClass('clone')
                 .css(startCoords)
                 .appendTo(parent);
-
+*/
             return new Promise(resolve => {
-                TweenMax.to(animatedBall, 1, {
+                TweenMax.to(null, 1, {
                     ...animationOpt,
                     x: -(startCoords.left - endCoords.left),
                     y: -(startCoords.top - endCoords.top),
                     ease: Power2.easeInOut,
                     parseTransform: true,
                     onStart: () => {
-                        ball.css({ opacity: 0 });
-                        animatedBall.css({ zIndex: 100 });
+                        ball.css({opacity: 0});
+                        //animatedBall.css({ zIndex: 100 });
                     },
                     onComplete: () => {
                         rightDoor.removeClass("animation");
@@ -502,7 +503,7 @@ const LotteryMachineComponent = () => {
     return (
         <div className="scene">
             <div id="ball-place"></div>
-            <button id="play" disabled={disabled}>
+            <button className="button ice" id="play" disabled={disabled}>
                 Play
             </button>
         </div>
