@@ -9,7 +9,7 @@ import tree from "./assets/yil_basi_agaci.png";
 import gifts from "./assets/hediye_paketleri.png"
 import kafein from "./assets/kafein_logo.svg"
 import SnowMan from "./components/SnowMan";
-import WinnerModal from "./components/WinnerModal";
+
 
 function App() {
     return (
