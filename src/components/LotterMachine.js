@@ -344,10 +344,10 @@ class LotteryMachine {
     }
 
     // animation of rolling ball out of machine
-    rollBallOut(parent, placeForBall, animationOpt, callback) {
+    rollBallOut(parent, placeForBall, animationOpt, callback, winningNumber) {
         const {ball, lift, rightDoor, leftDoor} = this.views;
         const randomColor = this.opt.ball.colors[Math.floor(Math.random() * this.opt.ball.colors.length)];
-        const randomNumber = [Math.floor(Math.random() * 100)];
+        const displayNumber = Math.floor(Math.random() * 100);
 
         ball
             .removeClass("no-transition")
@@ -372,10 +372,11 @@ class LotteryMachine {
             });
         }
 
+
         function openDoors() {
             return new Promise(resolve => {
-                ball.css({zIndex: 2})
-                    .html(randomNumber)
+                ball.css({ zIndex: 2 })
+                    .html(winningNumber)  // Use winningNumber instead of displayNumber
                     .addClass("no-transition")
                     .removeClass("blink animation-roll animation-up");
 
@@ -384,7 +385,6 @@ class LotteryMachine {
 
                 setTimeout(resolve, 1000);
             });
-
         }
 
         function moveBallOut() {
@@ -392,13 +392,6 @@ class LotteryMachine {
             const placeForBallElement = $(placeForBall); // Ensure placeForBall is a jQuery object
             const endCoords = placeForBallElement.offset();
 
-            /*
-            const animatedBall = ball
-                .clone()
-                .addClass('clone')
-                .css(startCoords)
-                .appendTo(parent);
-*/
             return new Promise(resolve => {
                 TweenMax.to(null, 1, {
                     ...animationOpt,
@@ -408,7 +401,6 @@ class LotteryMachine {
                     parseTransform: true,
                     onStart: () => {
                         ball.css({opacity: 0});
-                        //animatedBall.css({ zIndex: 100 });
                     },
                     onComplete: () => {
                         rightDoor.removeClass("animation");
@@ -416,9 +408,8 @@ class LotteryMachine {
                         resolve();
                     }
                 });
-            })
+            });
         }
-
 
         liftBallUp()
             .then(() => liftBallDown())
@@ -426,7 +417,6 @@ class LotteryMachine {
             .then(() => moveBallOut())
             .then(() => setTimeout(callback, 1000));
     }
-
     // Добавить экзмепляр в DOM-дерево
     draw(parent) {
         this.view.appendTo(parent);
@@ -460,7 +450,8 @@ const LotteryMachineComponent = () => {
     const [disabled, setDisabled] = useState(false);
     const lotteryMachineRef = useRef(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [winningNumber, setWinningNumber] = useState(null);
+    const [modalWinningNumber, setModalWinningNumber] = useState(null); // Add this line
+
     useEffect(() => {
         const $scene = document.querySelector('.scene');
         const $ballPlace = document.getElementById('ball-place');
@@ -477,11 +468,12 @@ const LotteryMachineComponent = () => {
             machineInstance.draw($scene);
         }
 
-        const handleClick = () => {
+        function handleClick() {
             $button.removeEventListener('click', handleClick);
             setDisabled(true);
 
-            const winningNumber = Math.floor(Math.random() * 100); // Generate a random winning number
+            const winningNumber = Math.floor(Math.random() * 100);
+            setModalWinningNumber(winningNumber);
 
             lotteryMachineRef.current
                 .play()
@@ -492,18 +484,19 @@ const LotteryMachineComponent = () => {
                         ballAnimationOpt,
                         () => {
                             setDisabled(false);
-                            setModalVisible(true); // Modal'ı aç
+                            setModalVisible(true);
                             $button.addEventListener('click', handleClick);
                         },
-                        winningNumber // Pass the winning number to rollBallOut
+                        winningNumber  // Pass winningNumber here
                     )
                 );
 
-            // 5 saniye sonra modal'ı kapat
             setTimeout(() => {
                 setModalVisible(false);
             }, 5000);
-        };
+        }
+// ... existing code ...
+
 
         $button.addEventListener('click', handleClick);
 
@@ -525,15 +518,29 @@ const LotteryMachineComponent = () => {
                 closable={false}
                 centered
             >
-                <Player
-                    autoplay
-                    loop
-                    src="https://assets3.lottiefiles.com/packages/lf20_UJNc2t.json"
-                    style={{ height: "300px", width: "300px" }}
-                >
-                </Player>
-                Kazanan Sayı :
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ position: 'relative' }}>
+                        <Player
+                            autoplay
+                            loop
+                            src="https://assets3.lottiefiles.com/packages/lf20_UJNc2t.json"
+                            style={{ height: "300px", width: "300px" }}
+                        />
+                        <div style={{ marginTop: '10%', fontSize: '50px' }}>
+                            Kazanan Sayı
+                        </div>
+                        <svg height="100" width="100" style={{ position: 'absolute', top: '75%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="1" fill="red" />
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" style={{ fontSize: '50px' }}>
+                                {modalWinningNumber}
+                            </text>
+                        </svg>
+                    </div>
+                </div>
             </Modal>
+
+
+
         </div>
     );
 };
