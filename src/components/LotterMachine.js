@@ -19,10 +19,10 @@ class LotteryMachine {
                 ball: 'ball',
                 hoverArea: 'hover-area'
             },
-            size: 140,
+            size: 280,
             ball: {
                 count: 16,
-                size: 36,
+                size: 72,
                 colors: [
                     "#c15bb6",
                     "#8380c3",
