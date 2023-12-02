@@ -1,6 +1,6 @@
 import React from 'react';
 import "../snowman.css"
-
+import logo from '../assets/kafein_logo.svg'
 
 const SnowMan: React.FC = () => (
     <main style={{ width: '40%', height: 'auto', position:"fixed", right: '-10%', bottom: '9%', zIndex:-100}}>
@@ -33,7 +33,9 @@ const SnowMan: React.FC = () => (
             <div class="right-mitten-2"></div>
             <div class="wind">
                 <div class="scarf-1"></div>
-                <div class="scarf-2"></div>
+                <div class="scarf-2">
+                    <img src={logo} alt="Logo" className="logo" />
+                </div>
                 <div class="scarf-3"></div>
             </div>
         </div>

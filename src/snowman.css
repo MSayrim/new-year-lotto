@@ -1,6 +1,6 @@
 body{
     background-color: rgb(14, 46, 96);
-    background-image: url('./assets/1000_F_301810522_6ElLT5YQcK85AzPjDrcaT79bF5GlDka9 (1).png');
+    background-image: url('assets/kar_arkaplan.png');
     background-size: cover;
 }
 .ant-card{
@@ -8,6 +8,7 @@ body{
     border-color: #abe9f4;
     box-shadow: 0 0 70px rgba(48, 138, 255, 0.5);
 }
+/*  <img src={kafein} alt="Kafain Logo"  style={{ width: '20%', height: 'auto',position:"fixed", left: '40%',top:'25%', zIndex:-100 }} />*/
 .ant-card .ant-card-body{
     padding: 8px!important;
 }
@@ -284,6 +285,14 @@ main{
     height: 51%;
     border-radius: 10%;
 }
+.logo {
+    width: 100%; /* Logo genişliğini ayarlayın */
+    height: auto; /* Logo yüksekliğini otomatik olarak ayarlayın */
+    position: absolute;
+    top: 75%; /* Logoyu ortalamak için */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Logoyu merkezlemek için */
+}
 .scarf-3{
     top: 89%;
     left: 47%;
@@ -294,9 +303,10 @@ main{
 }
 .stars {
     background-color: white;
-    height: 30px;
-    width: 30px;
+    height: 24px;
+    width: 24px;
     border-radius: 50%;
+    top: 10% !important;
     animation-iteration-count: infinite;
 }
 .star-1 {

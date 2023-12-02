@@ -3,7 +3,8 @@ import React, {useEffect, useState, useRef} from 'react';
 import $ from 'jquery';
 import {TweenMax, Power2} from 'gsap';
 import '../App.css';
-
+import {Modal} from "antd";
+import { Player } from "@lottiefiles/react-lottie-player";
 class LotteryMachine {
     constructor(opt = {}) {
         let _def
@@ -383,6 +384,7 @@ class LotteryMachine {
 
                 setTimeout(resolve, 1000);
             });
+
         }
 
         function moveBallOut() {
@@ -457,7 +459,8 @@ class LotteryMachine {
 const LotteryMachineComponent = () => {
     const [disabled, setDisabled] = useState(false);
     const lotteryMachineRef = useRef(null);
-
+    const [modalVisible, setModalVisible] = useState(false);
+    const [winningNumber, setWinningNumber] = useState(null);
     useEffect(() => {
         const $scene = document.querySelector('.scene');
         const $ballPlace = document.getElementById('ball-place');
@@ -478,6 +481,8 @@ const LotteryMachineComponent = () => {
             $button.removeEventListener('click', handleClick);
             setDisabled(true);
 
+            const winningNumber = Math.floor(Math.random() * 100); // Generate a random winning number
+
             lotteryMachineRef.current
                 .play()
                 .then(() =>
@@ -487,10 +492,17 @@ const LotteryMachineComponent = () => {
                         ballAnimationOpt,
                         () => {
                             setDisabled(false);
+                            setModalVisible(true); // Modal'ı aç
                             $button.addEventListener('click', handleClick);
-                        }
+                        },
+                        winningNumber // Pass the winning number to rollBallOut
                     )
                 );
+
+            // 5 saniye sonra modal'ı kapat
+            setTimeout(() => {
+                setModalVisible(false);
+            }, 5000);
         };
 
         $button.addEventListener('click', handleClick);
@@ -504,8 +516,24 @@ const LotteryMachineComponent = () => {
         <div className="scene">
             <div id="ball-place"></div>
             <button className="button ice" id="play" disabled={disabled}>
-                Play
+                Çekiliş
             </button>
+            <Modal
+                visible={modalVisible}
+                onCancel={() => setModalVisible(false)}
+                footer={null}
+                closable={false}
+                centered
+            >
+                <Player
+                    autoplay
+                    loop
+                    src="https://assets3.lottiefiles.com/packages/lf20_UJNc2t.json"
+                    style={{ height: "300px", width: "300px" }}
+                >
+                </Player>
+                Kazanan Sayı :
+            </Modal>
         </div>
     );
 };
