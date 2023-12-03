@@ -4,7 +4,9 @@ import $ from 'jquery';
 import {TweenMax, Power2} from 'gsap';
 import '../App.css';
 import {Modal} from "antd";
-import { Player } from "@lottiefiles/react-lottie-player";
+import {Player} from "@lottiefiles/react-lottie-player";
+import SnowGlobe from "./SnowGlobe";
+
 class LotteryMachine {
     constructor(opt = {}) {
         let _def
@@ -91,7 +93,7 @@ class LotteryMachine {
                 pos: (_from = this.getBallPos(false)),
                 time: null
             },
-            // Конечные параметры анимации
+            // Конечные параметры анимацииfmfm
             to: {
                 pos: this.getRandomPos()
             },
@@ -347,7 +349,6 @@ class LotteryMachine {
     rollBallOut(parent, placeForBall, animationOpt, callback, winningNumber) {
         const {ball, lift, rightDoor, leftDoor} = this.views;
         const randomColor = this.opt.ball.colors[Math.floor(Math.random() * this.opt.ball.colors.length)];
-        const displayNumber = Math.floor(Math.random() * 100);
 
         ball
             .removeClass("no-transition")
@@ -375,7 +376,7 @@ class LotteryMachine {
 
         function openDoors() {
             return new Promise(resolve => {
-                ball.css({ zIndex: 2 })
+                ball.css({zIndex: 2})
                     .html(winningNumber)  // Use winningNumber instead of displayNumber
                     .addClass("no-transition")
                     .removeClass("blink animation-roll animation-up");
@@ -417,6 +418,7 @@ class LotteryMachine {
             .then(() => moveBallOut())
             .then(() => setTimeout(callback, 1000));
     }
+
     // Добавить экзмепляр в DOM-дерево
     draw(parent) {
         this.view.appendTo(parent);
@@ -472,8 +474,8 @@ const LotteryMachineComponent = () => {
             $button.removeEventListener('click', handleClick);
             setDisabled(true);
 
-            const winningNumber = Math.floor(Math.random() * 100);
-            setModalWinningNumber(winningNumber);
+            const winningNumber = Math.floor(Math.random() * 1000);
+
 
             lotteryMachineRef.current
                 .play()
@@ -493,8 +495,10 @@ const LotteryMachineComponent = () => {
 
             setTimeout(() => {
                 setModalVisible(false);
-            }, 5000);
+                setModalWinningNumber(winningNumber);
+            }, 7000);
         }
+
 // ... existing code ...
 
 
@@ -511,35 +515,9 @@ const LotteryMachineComponent = () => {
             <button className="button ice" id="play" disabled={disabled}>
                 Çekiliş
             </button>
-            <Modal
-                visible={modalVisible}
-                onCancel={() => setModalVisible(false)}
-                footer={null}
-                closable={false}
-                centered
-            >
-                <div style={{ textAlign: 'center' }}>
-                    <div style={{ position: 'relative' }}>
-                        <Player
-                            autoplay
-                            loop
-                            src="https://assets3.lottiefiles.com/packages/lf20_UJNc2t.json"
-                            style={{ height: "300px", width: "300px" }}
-                        />
-                        <div style={{ marginTop: '10%', fontSize: '50px' }}>
-                            Kazanan Sayı
-                        </div>
-                        <svg height="100" width="100" style={{ position: 'absolute', top: '75%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="1" fill="red" />
-                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" style={{ fontSize: '50px' }}>
-                                {modalWinningNumber}
-                            </text>
-                        </svg>
-                    </div>
-                </div>
-            </Modal>
-
-
+            <div style={{ width: '60%', height: 'auto',position:"fixed", left: '20%',top:'50%', zIndex:-100 }}>
+            <SnowGlobe number={modalWinningNumber}></SnowGlobe>
+            </div>
 
         </div>
     );

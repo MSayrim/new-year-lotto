@@ -1,8 +1,8 @@
-body{
-    background-color: rgb(14, 46, 96);
-    background-image: url('assets/kar_arkaplan.png');
-    background-size: cover;
-}
+/*body{*/
+/*    background-color: rgb(14, 46, 96);*/
+/*    background-image: url('assets/kar_arkaplan.png');*/
+/*    background-size: cover;*/
+/*}*/
 .ant-card{
     background-color: rgb(189, 222, 236) !important;
     border-color: #abe9f4;
