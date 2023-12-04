@@ -1,4 +1,9 @@
-
+#SnowfallCanvas{
+    aspect-ratio: 1920/1080!important;
+}
+.lightrope{
+    position: fixed!important;
+}
 button {
     font-family: "Open Sans";
     color: #fff;
