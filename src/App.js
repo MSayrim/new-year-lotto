@@ -16,9 +16,8 @@ function App() {
     return (
         <Row className="App">
             <Col span={10}><LotteryMachineComponent/></Col>
-            <Col span={14}><ListOfWinners /></Col>
-            <Snowfall />
-            <img src={kafein} alt="Kafain Logo"  style={{ width: '25%', height: 'auto',position:"fixed", left: '40%',top:'20%', zIndex:-200}} />
+            <img src={kafein} alt="Kafain Logo"  style={{ width: '10%', height: 'auto',position:"fixed", left: '65%',top:'15%', zIndex:-200}} />
+            <Snowfall style={{position:"fixed"}}  snowflakeCount={2000}/>
             <img src={tree} alt="Christmas Tree" style={{ width: '60%', height: 'auto',position:"fixed", left: '-26%', zIndex:-100 }} />
             <img src={gifts} alt="Christmas Gifts" style={{ width: '35%', height: 'auto',position:"fixed", right:'-2%', bottom:'-1%', zIndex:-100}} />
             <img src={snow} alt="Christmas Gifts" style={{ width: '100%', height: 'auto',position:"fixed", right:'-2%', bottom:'-1%', zIndex:-120}} />

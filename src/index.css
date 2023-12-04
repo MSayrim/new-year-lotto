@@ -16,9 +16,9 @@ code {
   --color-2: #fcc100;
   --color-3: cyan;
   --color-4: black;
-
-  --aura-size: 1000% !important;
-  --aura-speed: 15s;
+position: fixed;
+  --aura-size: 50000% !important;
+  --aura-speed: 10s;
 
   --aura-1: var(--color-1);
   --aura-2: var(--color-2);
