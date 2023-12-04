@@ -345,6 +345,18 @@ class LotteryMachine {
         });
     }
 
+    saveResultToLocalStorage(result) {
+        const savedResults = localStorage.getItem('lotteryResults') ? JSON.parse(localStorage.getItem('lotteryResults')) : [];
+        savedResults.push(result);
+        localStorage.setItem('lotteryResults', JSON.stringify(savedResults));
+    }
+
+    checkIfResultExists(result) {
+        const savedResults = localStorage.getItem('lotteryResults') ? JSON.parse(localStorage.getItem('lotteryResults')) : [];
+        return savedResults.includes(result);
+    }
+
+
     // animation of rolling ball out of machine
     rollBallOut(parent, placeForBall, animationOpt, callback, winningNumber) {
         const {ball, lift, rightDoor, leftDoor} = this.views;
@@ -474,8 +486,13 @@ const LotteryMachineComponent = () => {
             $button.removeEventListener('click', handleClick);
             setDisabled(true);
 
-            const winningNumber = Math.floor(Math.random() * 1000);
+            let winningNumber;
 
+            do {
+                 winningNumber = Math.floor(Math.random() * 15) + 1;
+            } while (lotteryMachineRef.current.checkIfResultExists(winningNumber));
+
+            lotteryMachineRef.current.saveResultToLocalStorage(winningNumber);
 
             lotteryMachineRef.current
                 .play()
@@ -489,7 +506,7 @@ const LotteryMachineComponent = () => {
                             setModalVisible(true);
                             $button.addEventListener('click', handleClick);
                         },
-                        winningNumber  // Pass winningNumber here
+                        winningNumber
                     )
                 );
 
