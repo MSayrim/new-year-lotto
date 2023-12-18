@@ -527,17 +527,38 @@ const LotteryMachineComponent = () => {
         };
     }, []);
 
+    // return (
+    //     <>
+    //       <div className="scene">
+    //         <div className='d-block'>
+    //           <div id="ball-place"></div>
+    //           <div>
+    //             <button className="button ice" id="play" disabled={disabled}>
+    //               Çekiliş
+    //             </button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div >
+    //         <SnowGlobe number={modalWinningNumber}></SnowGlobe>
+    //       </div>
+    //     </>
+    //   );
+
     return (
+        <>
         <div className="scene">
             <div id="ball-place"></div>
             <button className="button ice" id="play" disabled={disabled}>
-                Çekiliş
+                <p className='ice-button-text'>Çekiliş</p>
             </button>
-            <div style={{ width: '60%', height: 'auto',position:"fixed", left: '20%',top:'50%', zIndex:-100 }}>
-            <SnowGlobe number={modalWinningNumber}></SnowGlobe>
-            </div>
+
 
         </div>
+        <div>
+            <SnowGlobe number={modalWinningNumber}></SnowGlobe>
+            </div>
+        </>
     );
 };
 export default LotteryMachineComponent;

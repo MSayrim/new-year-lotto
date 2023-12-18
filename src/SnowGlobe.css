@@ -1,5 +1,6 @@
 .canvas {
-    --size: 50vmin;
+    /* width: 45vh; */
+    --size: 45vh;
     width: var(--size);
     aspect-ratio: 1;
     position: absolute;
@@ -130,10 +131,10 @@
 }
 
 .snowflake {
-    left: 50%;
-    top: -5%;
-    width: 2%;
-    height: 2%;
+    left: 2vh;
+    top: -1vh;
+    width: 1vh;
+    height: 1vh;
     background: white;
     border-radius: 50%;
     abox-shadow: inset 0.25vmin -0.25vmin 0.25vmin #0002;
@@ -207,9 +208,9 @@
 
 .text-alignment{
     z-index: 1000;
-    font-size: 216px;
+    font-size: 17vh;
     font-family: 'MyFont4', SansSerif, serif;
-    top:22% !important;
+    top:13% !important;
     text-align: center !important;
 }
 

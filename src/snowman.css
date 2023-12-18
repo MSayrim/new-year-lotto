@@ -25,24 +25,31 @@
 main{
     max-width: 500px;
     padding-top: 3%;
+
+    width: 25vh !important;
+    height: 11vh !important;
+    position: fixed;
+    right: 10vh !important;
+    bottom: 31vh !important;
+    z-index: 999 !important;
 }
 .snowman *{
     position: absolute;
 }
 .snowman {
     position: relative;
-    right: -6%;
+    right: -4vh;
     display: block;
-    margin: 10% 25%;
-    width: 150px;
-    height: 150px;
+    margin: 12vh 6.5vh;
+    width: 12vh;
+    height: 12vh;
 }
 .bottom {
-    top: 88%;
-    left: -7%;
+    top: 12vh;
+    left: -1vh;
     background: white;
-    width: 120%;
-    height: 120%;
+    width: 14vh;
+    height: 16vh;
     border-radius: 50%;
 }
 .head {
@@ -70,13 +77,12 @@ main{
     border-radius: 50%;
 }
 .nose {
-    -webkit-clip-path: polygon(70% 51%, 70% 72%, 0 60%);
     clip-path: polygon(70% 50%, 70% 72%, 0 60%);
-    top: -260%;
-    left:-450%;
-    width: 8%;
-    height: 9rem;
-    border-right: 10rem solid #d73d00;
+    top: -6vh;
+    left: -9vh;
+    width: 1vh;
+    height: 15vh;
+    border-right: 16vh solid #d73d00;
 }
 .snowman-mouth-1{
     top: 72%;
@@ -245,12 +251,12 @@ main{
     z-index: 5;
 }
 .wind{
-    width: 100%;
-    height: 100%;
+    width: 12vh;
+    height: 12vh;
     animation-duration: 3s;
     animation-name: hat;
     animation-iteration-count: infinite;
-    transform-origin:0% 0%;
+    transform-origin: 0% 0%;
     animation-timing-function: linear;
     z-index: 10;
 }
@@ -338,5 +344,11 @@ main{
     30% {
         transform: scale(0.2);
         opacity: 0.2;
+    }
+}
+
+@media  screen and (max-width: 1100px) {
+    main{
+        display: none;
     }
 }

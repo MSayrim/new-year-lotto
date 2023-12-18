@@ -10,19 +10,32 @@ import gifts from "./assets/hediye_paketleri.png"
 import kafein from "./assets/kafein_logo.svg"
 import snow from "./assets/kar_arkaplan.png"
 import SnowMan from "./components/SnowMan";
+import christmasTree from "./assets/christmastree.png";
+import gifts02 from "./assets/hediyelerin-paketleri.png";
+
+
 
 
 function App() {
     return (
-        <Row className="App">
-            <Col span={10}><LotteryMachineComponent/></Col>
-            <img src={kafein} alt="Kafain Logo"  style={{ width: '10%', height: 'auto',position:"fixed", left: '65%',top:'15%', zIndex:-200}} />
+        // <Row className="App">
+        //     <Col span={10}><LotteryMachineComponent/></Col>
+        //     <img src={kafein} alt="Kafain Logo"  style={{ width: '4.5%', height: 'auto',position:"fixed", left: '85.8%',top:'9%', zIndex:-200}} />
+        //     <Snowfall style={{position:"fixed"}}  snowflakeCount={2000}/>
+        //     <img src={tree} alt="Christmas Tree" style={{ width: '60%', height: 'auto',position:"fixed", left: '-26%', zIndex:-100 }} />
+        //     <img src={gifts} alt="Christmas Gifts" style={{ width: '35%', height: 'auto',position:"fixed", right:'-2%', bottom:'-1%', zIndex:-100}} />
+        //     <img src={snow} alt="Christmas Gifts" style={{ width: '100%', height: 'auto',position:"fixed", right:'-2%', bottom:'-1%', zIndex:-120}} />
+        //     <SnowMan />
+        // </Row>
+
+        <div className='row'>
+            <div className='col-3 tree'><img src={christmasTree} alt="Christmas Tree" /></div>
+            <div className='col-12 snow-floor'><img src={snow} alt="Christmas Gifts" /></div>
+            <div className='col-3 offset-9 gifts'><div className='d-block'><div><img className='logo-img' src={kafein} alt="Kafain Logo" /></div><div><img className='gifts-img' src={gifts02} alt="Christmas Gifts"/></div></div></div>
+            <div className='col-3 offset-2'><LotteryMachineComponent/></div>
             <Snowfall style={{position:"fixed"}}  snowflakeCount={2000}/>
-            <img src={tree} alt="Christmas Tree" style={{ width: '60%', height: 'auto',position:"fixed", left: '-26%', zIndex:-100 }} />
-            <img src={gifts} alt="Christmas Gifts" style={{ width: '35%', height: 'auto',position:"fixed", right:'-2%', bottom:'-1%', zIndex:-100}} />
-            <img src={snow} alt="Christmas Gifts" style={{ width: '100%', height: 'auto',position:"fixed", right:'-2%', bottom:'-1%', zIndex:-120}} />
             <SnowMan />
-        </Row>
+        </div>
     );
 }
 
