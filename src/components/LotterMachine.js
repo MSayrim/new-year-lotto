@@ -489,6 +489,7 @@ const LotteryMachineComponent = () => {
             let winningNumber;
 
             do {
+                // Buradaki 15 sayısı , toplam top sayısını belirtmektedir. Katılan kişi sayısına göre buradaki top sayısı değiştirilebilir.
                  winningNumber = Math.floor(Math.random() * 15) + 1;
             } while (lotteryMachineRef.current.checkIfResultExists(winningNumber));
 
