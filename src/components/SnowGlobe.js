@@ -16,7 +16,7 @@ const SnowGlobe = ({number}) => {
                 <div className="snow"></div>
                 <div className="ground"></div>
                 <div style={{width: '100%'}} className="text-alignment">
-                    <LinearGradient gradient={['to bottom', '#aba0f8 ,#898995']}>
+                    <LinearGradient gradient={['to bottom', '#ffaf1c ,#ffee9c']}>
                         {number}
                     </LinearGradient></div>
                 <div className="something"></div>
