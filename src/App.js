@@ -1,5 +1,6 @@
 // src/App.js
 import React from 'react';
+import {useEffect, useState, useRef} from 'react';
 import './App.css';
 import LotteryMachineComponent from './components/LotterMachine';
 import ListOfWinners from "./components/ListOfWinners";
@@ -13,10 +14,28 @@ import SnowMan from "./components/SnowMan";
 import christmasTree from "./assets/christmastree.png";
 import gifts02 from "./assets/hediyelerin-paketleri.png";
 
+import jingleAudio from "../src/assets/audio/jingle-bells-last.wav";
 
 
 
 function App() {
+    useEffect(() => {
+        const audioElement = new Audio(jingleAudio);
+        audioElement.loop = true;
+    
+        const playAudio = () => {
+            audioElement.play().then(() => {}).catch(error => {});
+        };
+        playAudio();
+    
+        return () => {
+            audioElement.pause();
+            audioElement.currentTime = 0;
+        };
+    }, []);
+    
+    
+
     return (
         // <Row className="App">
         //     <Col span={10}><LotteryMachineComponent/></Col>
@@ -31,9 +50,15 @@ function App() {
         <div className='row'>
             <div className='col-3 tree'><img src={christmasTree} alt="Christmas Tree" /></div>
             <div className='col-12 snow-floor'><img src={snow} alt="Christmas Gifts" /></div>
-            <div className='col-3 offset-9 gifts'><div className='d-block'><div><img className='logo-img' src={kafein} alt="Kafain Logo" /></div><div><img className='gifts-img' src={gifts02} alt="Christmas Gifts"/></div></div></div>
-            <div className='col-3 offset-2'><LotteryMachineComponent/></div>
-            <Snowfall style={{position:"fixed"}}  snowflakeCount={2000}/>
+            {/* <div className='col-6 offset-3 d-flex justify-content-center welcome-year-text'><p className='welcome-text'>HOŞGELDİN </p> <br/> <p className='year-text'>2024</p> </div> */}
+            <div className='col-3 offset-9 gifts'>
+                <div className='d-block'>
+                    <div><img className='logo-img' src={kafein} alt="Kafain Logo" /></div>
+                    <div><img className='gifts-img' src={gifts02} alt="Christmas Gifts" /></div>
+                </div>
+            </div>
+            <div className='col-3 offset-2'><LotteryMachineComponent /></div>
+            <Snowfall style={{ position: "fixed" }} snowflakeCount={2000} />
             <SnowMan />
         </div>
     );

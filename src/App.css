@@ -486,6 +486,31 @@ button {
 
 
 
+/* 
+.year-text {
+    top: 29vh;
+
+    font-family: 'MyFont4', SansSerif, serif;
+    font-size: 13vh;
+    position: absolute;
+    align-items: center;
+    text-align: center;
+
+    color: #ffffffb3;
+}
+
+.welcome-text {
+    top: 9vh;
+
+    font-family: 'MyFont4', SansSerif, serif;
+    font-size: 13vh;
+    position: absolute;
+    align-items: center;
+    text-align: center;
+
+    color: #ffffffb3;
+} */
+
 
 .canvas{
     top: 70% !important;
@@ -509,9 +534,9 @@ button {
 
 .gifts .logo-img{
     position: absolute;
-    right: 0.2%;
-    height: 11%;
-    top: 5%;
+    right: 3.2%;
+    height: 16%;
+    top: 11.6%;
 }
 
 .tree img{

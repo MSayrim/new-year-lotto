@@ -7,8 +7,12 @@ import {Modal} from "antd";
 import {Player} from "@lottiefiles/react-lottie-player";
 import SnowGlobe from "./SnowGlobe";
 
+import ballAudio from "../assets/audio/ball-audio-last.wav";
+
 class LotteryMachine {
     constructor(opt = {}) {
+        this.audioElement = new Audio(ballAudio);
+
         let _def
         _def = {
             class: "lottery-machine",
@@ -47,7 +51,7 @@ class LotteryMachine {
     }
 
     build(opt = {}) {
-        let base, ref
+          let base, ref
         base = this.dom
         this.opt = $.extend(this.opt, opt)
 
@@ -83,6 +87,11 @@ class LotteryMachine {
         this._setContext()
         return this
     }
+
+    playShuffleSound() {
+        this.audioElement.currentTime = 0;
+        this.audioElement.play();
+      }
 
     // Сформировать новый шарик
     createBall() {
@@ -325,25 +334,29 @@ class LotteryMachine {
         this.drawBalls();
     }
 
-    // play: shakeBalls + endShakeBalls
     play() {
+        this.playShuffleSound();
+    
         let _now = Date.now();
         return this.animate({
-                from: _now,
-                to: _now + 2000,
-                duration: 2000,
-                step: 2
-            }, (now) => this._shakeBalls(now)
-        ).then(() => {
+            from: _now,
+            to: _now + 3000,
+            duration: 3000,
+            step: 2
+        }, (now) => this._shakeBalls(now)).then(() => {
             _now = Date.now();
-            this.animate({
+            return this.animate({
                 from: _now,
                 to: _now + 500,
                 duration: 500,
                 step: 2
-            }, (now) => this._endShakeBalls(now))
+            }, (now) => this._endShakeBalls(now));
+        }).then(() => {
+            this.audioElement.pause();
+            this.audioElement.currentTime = 0;
         });
     }
+    
 
     saveResultToLocalStorage(result) {
         const savedResults = localStorage.getItem('lotteryResults') ? JSON.parse(localStorage.getItem('lotteryResults')) : [];
@@ -462,70 +475,80 @@ class LotteryMachine {
 
 const LotteryMachineComponent = () => {
     const [disabled, setDisabled] = useState(false);
+    const [spaceKeyPressed, setSpaceKeyPressed] = useState(false);
     const lotteryMachineRef = useRef(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [modalWinningNumber, setModalWinningNumber] = useState(null); // Add this line
-
+    const [modalWinningNumber, setModalWinningNumber] = useState(null);
+  
     useEffect(() => {
-        const $scene = document.querySelector('.scene');
-        const $ballPlace = document.getElementById('ball-place');
-        const $button = document.querySelector('button#play');
-        const ballAnimationOpt = {
-            width: 70,
-            height: 70,
-            fontSize: 32,
-        };
-
-        if (!lotteryMachineRef.current) {
-            const machineInstance = new LotteryMachine();
-            lotteryMachineRef.current = machineInstance;
-            machineInstance.draw($scene);
+      const $scene = document.querySelector('.scene');
+      const $ballPlace = document.getElementById('ball-place');
+      const $button = document.querySelector('button#play');
+      const ballAnimationOpt = {
+        width: 70,
+        height: 70,
+        fontSize: 32,
+      };
+  
+      if (!lotteryMachineRef.current) {
+        const machineInstance = new LotteryMachine();
+        lotteryMachineRef.current = machineInstance;
+        machineInstance.draw($scene);
+      }
+  
+      function handleClick() {
+        if (!disabled) {
+          setSpaceKeyPressed(true);
+          $button.removeEventListener('click', handleClick);
+          setDisabled(true);
+  
+          let winningNumber;
+  
+          do {
+            winningNumber = Math.floor(Math.random() * 15) + 1;
+          } while (lotteryMachineRef.current.checkIfResultExists(winningNumber));
+  
+          lotteryMachineRef.current.saveResultToLocalStorage(winningNumber);
+  
+          lotteryMachineRef.current
+            .play()
+            .then(() =>
+              lotteryMachineRef.current.rollBallOut(
+                $scene,
+                $ballPlace,
+                ballAnimationOpt,
+                () => {
+                  setDisabled(false);
+                  setModalVisible(true);
+                  setSpaceKeyPressed(false);
+                  $button.addEventListener('click', handleClick);
+                },
+                winningNumber
+              )
+            );
+  
+          setTimeout(() => {
+            setModalVisible(false);
+            setModalWinningNumber(winningNumber);
+          }, 7000);
         }
+      }
+  
 
-        function handleClick() {
-            $button.removeEventListener('click', handleClick);
-            setDisabled(true);
-
-            let winningNumber;
-
-            do {
-                // Buradaki 15 sayısı , toplam top sayısını belirtmektedir. Katılan kişi sayısına göre buradaki top sayısı değiştirilebilir.
-                 winningNumber = Math.floor(Math.random() * 15) + 1;
-            } while (lotteryMachineRef.current.checkIfResultExists(winningNumber));
-
-            lotteryMachineRef.current.saveResultToLocalStorage(winningNumber);
-
-            lotteryMachineRef.current
-                .play()
-                .then(() =>
-                    lotteryMachineRef.current.rollBallOut(
-                        $scene,
-                        $ballPlace,
-                        ballAnimationOpt,
-                        () => {
-                            setDisabled(false);
-                            setModalVisible(true);
-                            $button.addEventListener('click', handleClick);
-                        },
-                        winningNumber
-                    )
-                );
-
-            setTimeout(() => {
-                setModalVisible(false);
-                setModalWinningNumber(winningNumber);
-            }, 7000);
+      function handleKeyDown(event) {
+        if (event.code === 'Space' && !spaceKeyPressed) {
+          handleClick();
         }
-
-// ... existing code ...
-
-
-        $button.addEventListener('click', handleClick);
-
-        return () => {
-            $button.removeEventListener('click', handleClick);
-        };
-    }, []);
+      }
+  
+      $button.addEventListener('click', handleClick);
+      document.addEventListener('keydown', handleKeyDown);
+  
+      return () => {
+        $button.removeEventListener('click', handleClick);
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [disabled, spaceKeyPressed]);
 
     // return (
     //     <>
