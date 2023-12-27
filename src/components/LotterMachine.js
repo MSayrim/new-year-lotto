@@ -505,7 +505,7 @@ const LotteryMachineComponent = () => {
           let winningNumber;
   
           do {
-            winningNumber = Math.floor(Math.random() * 15) + 1;
+            winningNumber = Math.floor(Math.random() * 350) + 1;
           } while (lotteryMachineRef.current.checkIfResultExists(winningNumber));
   
           lotteryMachineRef.current.saveResultToLocalStorage(winningNumber);
